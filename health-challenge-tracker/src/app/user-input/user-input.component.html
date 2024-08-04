@@ -1,0 +1,33 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="max-w-md mx-auto bg-white p-6 mt-4 rounded-lg shadow-md">
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 text-sm font-bold mb-2">User name</label>
+      <input id="name" formControlName="name" placeholder="User name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <div formArrayName="workouts" *ngFor="let workout of workouts.controls; let i = index">
+      <div [formGroupName]="i" class="mb-4">
+        <label for="workoutType-{{i}}" class="block text-gray-700 text-sm font-bold mb-2">Workout Type</label>
+        <select id="workoutType-{{i}}" formControlName="type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option value="">Select workout type</option>
+          <option *ngFor="let type of workoutTypes" [value]="type">{{type}}</option>
+        </select>
+      </div>
+      <div [formGroupName]="i" class="mb-4">
+        <label for="minutes-{{i}}" class="block text-gray-700 text-sm font-bold mb-2">Workout minutes</label>
+        <input id="minutes-{{i}}" formControlName="minutes" type="number" placeholder="Workout minutes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <button type="button" (click)="removeWorkout(i)" class="text-red-500 hover:text-red-700">Remove</button>
+    </div>
+
+    <div class="mb-4">
+      <button type="button" (click)="addWorkout()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        Add Another Workout
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <button type="submit" [disabled]="!userForm.valid" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        Submit
+      </button>
+    </div>
+</form>

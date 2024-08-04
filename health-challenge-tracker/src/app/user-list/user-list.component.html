@@ -1,0 +1,61 @@
+<div class="m-6">
+    <div class="flex space-x-4 mb-4">
+      <input 
+        [(ngModel)]="searchTerm" 
+        (input)="search()" 
+        placeholder="Search by name"
+        class="border rounded-lg px-4 py-2 w-full md:w-1/3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <select 
+        [(ngModel)]="selectedWorkoutType" 
+        (change)="filterByWorkoutType()"
+        class="border rounded-lg px-4 py-2 w-full md:w-1/3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="">All workout types</option>
+        <option *ngFor="let type of workoutTypes" [value]="type">{{type}}</option>
+      </select>
+    </div>
+  
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+      <thead class="bg-blue-500 text-white text-left" >
+        <tr>
+          <th class="py-2 px-4 border-b">Name</th>
+          <th class="py-2 px-4 border-b">Workout Types</th>
+          <th class="py-2 px-4 border-b">Minutes</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <tr *ngFor="let user of paginatedUsers" class="hover:bg-gray-100">
+          <td class="py-2 px-4 border-b">{{user.name}}</td>
+          <td class="py-2 px-4 border-b">
+            <ul class="list-none list-inside">
+              <li *ngFor="let workout of user.workouts">{{workout.type}}</li>
+            </ul>
+          </td>
+          <td class="py-2 px-4 border-b">
+            <ul class="list-none list-inside">
+              <li *ngFor="let workout of user.workouts">{{workout.minutes}} minutes</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="mt-6 flex justify-between items-center">
+      <button 
+        (click)="currentPage = currentPage - 1" 
+        [disabled]="currentPage === 1"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Previous
+      </button>
+      <span class="text-gray-700">Page {{currentPage}} of {{totalPages}}</span>
+      <button 
+        (click)="currentPage = currentPage + 1" 
+        [disabled]="currentPage === totalPages"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Next
+      </button>
+    </div>
+  </div>  
